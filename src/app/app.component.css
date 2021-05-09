@@ -1,0 +1,71 @@
+td {
+    text-align: center;
+}
+
+h3 {
+    margin: 0px;
+}
+
+td,
+tr {
+    border: none;
+}
+
+table {
+    border: solid;
+    border-width: 4px;
+    height: 500px;
+    width: 500px;
+}
+
+.content {
+    display: flex;
+}
+
+.container-table {
+    padding-left: 20% !important;
+    padding-right: 5% !important;
+}
+
+.row2,
+.row5 {
+    border-bottom: solid;
+    border-width: 4px;
+}
+
+.col2,
+.col5 {
+    border-right: solid;
+    border-width: 4px;
+}
+
+#icon-check h3 {
+    margin-left: 10px;
+    text-align: center;
+}
+
+#icon-check path {
+    height: 15px;
+    width: 15px;
+    color: green;
+}
+
+#icon-error path {
+    height: 15px;
+    width: 15px;
+    color: #dc3545;
+}
+
+svg {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.red0{
+    background-color: #F2637E;
+}
+
+.red1, .red2, .red3, .red4, .red5, .red6, .red7, .red8, .red9{
+    background-color: #21B09B;
+}
