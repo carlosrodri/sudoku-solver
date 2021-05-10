@@ -1,14 +1,16 @@
-import { Solver } from './solver';
+import { Backtracking } from './backtracking';
 import { Component } from '@angular/core';
-import { timer } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'sudoku';
+  //Grilla o matriz que contiene el sudoku
   grid: number[][];
+
   isFilledGrid: boolean = false;
   sudokuIsSolved: boolean = false;
   iterations: number;
@@ -29,9 +31,6 @@ export class AppComponent {
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
-
-
-
   }
 
   ngOnInit() {
@@ -44,35 +43,6 @@ export class AppComponent {
     document.getElementById('buttonProgress').style.display = 'none';
     document.getElementById('icon-check').style.display = 'none';
     document.getElementById('icon-error').style.display = 'none';
-  }
-
-  /**
- * Prints a sudoku grid to stdout, not needed for the actual algorithm.
- */
-  printSudoku = (grid: number[][]) => {
-    const getChar = (char) => {
-      return char > 0 ? char.toString() : ' ';
-    };
-    const separatorLine = '+-------+-------+-------+';
-
-    for (let x = 0; x < 9; x++) {
-      if (x === 0) console.log(separatorLine);
-
-      let out = '';
-      for (let y = 0; y < 9; y++) {
-        if (y === 0) out += '| ';
-        if ((y + 1) % 3 === 0) {
-          out += getChar(grid[x][y]) + ' | ';
-        } else {
-          out += getChar(grid[x][y]) + ' ';
-        }
-      }
-      console.log(out);
-
-      if ((x + 1) % 3 === 0) {
-        console.log(separatorLine);
-      }
-    }
   }
 
   selectFile(event) {
@@ -89,46 +59,35 @@ export class AppComponent {
     document.getElementById('buttonProgress').style.display = 'block';
     this.grid = currentGrid;
     setTimeout(() => {
-      this.runSudoku();
+      this.solveSudoku();
     }, 1000);
     fileReader.onerror = function () {
       alert(fileReader.error);
     };
   }
 
-  private runSudoku() {
+  private solveSudoku() {
+    // Mediante esta variable calculamos el tiempo que le toma al algoritmo encontrar la solucion al sudoku
     let timeStart = new Date().getTime();
-    // Load the unsolved sudoku into the backtracker
-    console.log(this.grid);
+    // Enviamos el sudoku sin resolver a la clase de baktraking
     this.isFilledGrid = true;
-    this.printSudoku(this.grid);
-    let backtracker = new Solver(this.grid);
+    let backtracker = new Backtracking(this.grid);
 
-    // Solve the sudoku and measure how long it took
-    console.time('Solve Duration');
+    // Ejecutamos el metodo resolver y le asignamos la solucion a la matriz grid
     let solvedSudoku = backtracker.solve();
     this.grid = <number[][]>solvedSudoku
     this.sudokuIsSolved = true;
 
-    console.timeEnd('Solve Duration');
-    console.log('Iterations:', backtracker.neededIterations);
-
-    this.iterations = backtracker.neededIterations;
+    // Obtenemos el numero de iteraciones usadas
+    this.iterations = backtracker.numberIterations;
     this.time = (new Date().getTime() - timeStart) + 'ms';
-    // Print the solved sudoku if possible
-    // If solvedSudoku is false then the sudoku was not impossible to solve.
+    // Mostramos en la interfaz que el sudoku ha sido solucionado si no no lo motramos 
     if (solvedSudoku) {
-      this.printSudoku(<number[][]>solvedSudoku);
       document.getElementById('buttonProgress').style.display = 'none';
       document.getElementById('icon-check').style.display = 'block';
     } else {
-      console.log('No solution found');
       document.getElementById('buttonProgress').style.display = 'none';
       document.getElementById('icon-error').style.display = 'block';
     }
   }
-
-  //Print sudoku
-
-
 }
