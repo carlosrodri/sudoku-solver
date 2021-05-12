@@ -2,7 +2,7 @@
 
 Este proyecto fué desarrollado en Angular y TypeScript o visualizarlo aquí: https://carlosrodri.github.io/sudoku-solver/
 
-## Contenido
+# Contenido
 
 Para ver toda la lógica, está en la carpeta src/app y dentro de ella, los archivos: app.component.ts y backtracking.ts
 
