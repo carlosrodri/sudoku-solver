@@ -1,6 +1,6 @@
 # Sudoku Solver
 
-Este proyecto fué desarrollado en Angular y TypeScript
+Este proyecto fué desarrollado en Angular y TypeScript o visualizarlo aquí: https://carlosrodri.github.io/sudoku-solver/
 
 ## Condiciones para ejecutar el proyecto
 
